@@ -10,6 +10,7 @@ import dotenv from "dotenv";
 
 const janda = new JandaPress();
 const app = express();
+app.set("json spaces",2)
 dotenv.config();
 
 app.get("/", slow, limiter, (req, res) => {
