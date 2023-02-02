@@ -14,15 +14,45 @@ app.set("json spaces",2)
 dotenv.config();
 
 app.get("/", slow, limiter, (req, res) => {
-  res.send({
-    success: true,
-    message: "Hi, I'm alive!",
-    endpoint: "https://github.com/sinkaroid/jandapress/blob/master/README.md#routing",
-    date: new Date().toLocaleString(),
-    rss: janda.currentProccess().rss,
-    heap: janda.currentProccess().heap,
-    version: `${pkg.version}`,
-  });
+    let baseUrl = `https://${req.get('host')}`
+
+    res.send({
+      success: true,
+      date: new Date().toLocaleString(),
+      rss: janda.currentProccess().rss,
+      heap: janda.currentProccess().heap,
+      endpoint: {
+        nhentai: {
+        get: `${baseUrl}/nhentai/get?book=117013`,
+        search: `${baseUrl}/nhentai/search?key=milf&page=1&sort=popular-today`,
+        random: `${baseUrl}/nhentai/random`,
+        relate: `${baseUrl}/nhentai/relate?book=117013`,
+      },
+      pururin: {
+        get: `${baseUrl}/pururin/get?book=63373`,
+        search: `${baseUrl}/pururin/search?key=milf&page=1&sort=most-viewed`,
+        random: `${baseUrl}/pururin/random`,
+      },
+      hentaifox: {
+        get: `${baseUrl}/hentaifox/get?book=97527`,
+        search: `${baseUrl}/hentaifox/search?key=milf&page=1&sort=latest`,
+        random: `${baseUrl}/hentaifox/random`,
+      },
+      asmhentai: {
+        get: `${baseUrl}/asmhentai/get?book=416773`,
+        search: `${baseUrl}/asmhentai/search?key=milf&page=1`,
+        random: `${baseUrl}/asmhentai/random`,
+      },
+      hentai2read: {
+        get: `${baseUrl}/hentai2read/get?book=butabako_shotaone_matome_fgo_hen/1`,
+        search: `${baseUrl}/hentai2read/search?key=milf`,
+      },
+      threehentai: {
+        get: `${baseUrl}/3hentai/get?book=608979`,
+        search: `${baseUrl}/3hentai/search?key=milf&page=1&sort=popular-7d`,
+        random: `${baseUrl}/3hentai/random`,
+      }},
+    });
   logger.info({
     path: req.path,
     method: req.method,
